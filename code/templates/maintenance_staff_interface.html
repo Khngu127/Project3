@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance Staff Interface</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .thumbnail {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        .action-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .hidden-form {
+            display: none;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        input[type="checkbox"]:checked + .hidden-form {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Maintenance Staff Panel</h1>
+
+    <table border="1">
+        <tr>
+            <th><a href="/maintenance_staff_interface?sort_by=request_id&sort_order={{ new_sort_order }}">Request ID</a></th>
+            <th><a href="/maintenance_staff_interface?sort_by=apartment_number&sort_order={{ new_sort_order }}">Apartment Number</a></th>
+            <th><a href="/maintenance_staff_interface?sort_by=area&sort_order={{ new_sort_order }}">Area</a></th>
+            <th><a href="/maintenance_staff_interface?sort_by=description&sort_order={{ new_sort_order }}">Description</a></th>
+            <th><a href="/maintenance_staff_interface?sort_by=date_time&sort_order={{ new_sort_order }}">Date/Time</a></th>
+            <th><a href="/maintenance_staff_interface?sort_by=status&sort_order={{ new_sort_order }}">Status</a></th>
+            <th>Comment</th>
+            <th>Photo</th>
+            <th>Action</th>
+        </tr>
+
+        {% for request in requests %}
+            <tr>
+                <td>{{ request.id }}</td>
+                <td>{{ request.apartment_number }}</td>
+                <td>{{ request.area }}</td>
+                <td>{{ request.description }}</td>
+                <td>{{ request.date_time }}</td>
+                <td>{{ request.status }}</td>
+                <td>{{ request.comment }}</td>
+                <td>
+                    {% if request.photo %}
+                        <img src="{{ url_for('static', filename='uploads/' + request.photo) }}" alt="Photo" class="thumbnail">
+                    {% else %}
+                        No Photo
+                    {% endif %}
+                </td>
+                <td>
+                    {% if request.status == 'pending' %}
+                        <form action="/update_status" method="post">
+                            <input type="hidden" name="request_id" value="{{ request.id }}">
+                            <label for="comment{{ request.id }}">Comment:</label>
+                            <textarea name="comment" id="comment{{ request.id }}" rows="3"></textarea>
+                            <input type="submit" value="Update Status">
+                        </form>
+                    {% else %}
+                        Request Completed
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+<form action="/logout" method="post">
+    <input type="submit" value="Logout">
+</form>
+</body>
+</html>

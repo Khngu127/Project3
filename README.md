@@ -8,6 +8,7 @@ pip install mysql-connector-python
 
 This program uses MYSQL databases
 and DB browser
+name of the schema is tenantdb
 
 DB Browser can be downloaded by going to the Plugins tab located in settings which can be accessed through File
 

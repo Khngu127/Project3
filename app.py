@@ -6,7 +6,7 @@ import uuid, os
 from datetime import datetime, timedelta
 
 app = Flask(__name__, static_url_path='/static')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Kn5643121!@localhost/tenantdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Fisherman!@localhost/tenantdb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)

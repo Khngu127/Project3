@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance Request System</title>
+</head>
+<body>
+    <h1>Maintenance Requests</h1>
+    <table border="1">
+        <tr>
+            <th>Request ID</th>
+            <th>Apartment Number</th>
+            <th>Problem</th>
+            <th>Description</th>
+            <th>Photo</th>
+            <th>Date/Time</th>
+            <th>Status</th>
+        </tr>
+        {% for request in requests %}
+            <tr>
+                <td>{{ request.id }}</td>
+                <td>{{ request.apartment_number }}</td>
+                <td>{{ request.area }}</td>
+                <td>{{ request.description }}</td>
+                <td>{{ request.photo }}</td>
+                <td>{{ request.date_time }}</td>
+                <td>{{ request.status }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Submit Maintenance Request</h2>
+    <form action="/submit_request" method="post">
+        Apartment Number: <input type="text" name="apartment_number" required><br>
+        Area: <input type="text" name="area" required><br>
+        Description: <input type="text" name="description" required><br>
+        Photo (Optional): <input type="text" name="photo"><br>
+        <input type="submit" value="Submit Request">
+    </form>
+</body>
+</html>
